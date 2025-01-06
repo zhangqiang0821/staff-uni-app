@@ -1,6 +1,6 @@
 <template>
 	<view class="container">
-		<uni-section title="基本用法" type="line">
+		<uni-section title="个人信息" type="line">
 			<uni-forms :modelValue="formData" :rules="rules" ref="form" label-width="160">
 				<uni-forms-item label="姓名" name="name" required>
 					<uni-easyinput type="text" v-model="formData.name" placeholder="请输入姓名" />
@@ -18,7 +18,13 @@
 					<uni-data-checkbox mode="button" multiple v-model="formData.education" :localdata="education"></uni-data-checkbox>
 				</uni-forms-item>
 				<uni-forms-item label="从业时间" name="datetimesingle" required>
-					<uni-datetime-picker type="datetime" v-model="formData.datetimesingle" />
+					<uni-datetime-picker 
+						type="daterange" 
+						rangeSeparator="至"
+					 	start="2021-3-20"
+						end="2025-5-20"
+						v-model="formData.datetimesingle"
+					 />
 				</uni-forms-item>
 				<uni-forms-item label="从业领域" name="workingArea" required>
 					<uni-data-checkbox mode="button" multiple v-model="formData.workingArea" :localdata="workingArea"></uni-data-checkbox>
@@ -30,6 +36,9 @@
 				</uni-forms-item>
 			</uni-forms>
 			<uni-button type="primary"  @click="onSave">确定</uni-button>
+			
+			<button @click="getUserInfoMethods">调用wx.login方法</button>
+
 		</uni-section>
 		
 		<uni-popup ref="popup" type="bottom" safeArea backgroundColor="#fff">
@@ -146,13 +155,14 @@
 				},
 			}
 		},
+		onLoad(){
+		},
 		methods: {
 			onSave() {
 				uni.showLoading()
 				this.$refs.form.validate((err, formDate) => {
 					uni.hideLoading()
 					console.log(err,formDate)
-					
 					if (!err) {
 						console.log(err,formDate)
 					}
@@ -164,6 +174,35 @@
 			},
 			onShowTree() {
 				this.$refs.popup.open()
+			},
+			
+			getUserInfoMethods() {
+				uni.login({
+					timeout: 6000,
+					success: (res) => {
+						console.log('success:login方法返回的值：', res)
+						if (res.code) {
+							// GET https://api.weixin.qq.com/sns/jscode2session?appid=APPID&secret=SECRET&js_code=JSCODE&grant_type=authorization_code 
+						      //发起网络请求
+							  
+						      uni.request({
+						        // url: 'https://api.weixin.qq.com/sns/jscode2session’,
+						        data: {
+									grant_type: 'authorization_code',
+									js_code: 'JSCODE',
+									secret: 'SECRET',
+									appid: 'wx1298b5933a8df337'
+						        }
+						      })
+						    } else {
+						      console.log('登录失败！' + res.errMsg)
+						    }
+						
+					},
+					fail(err) {
+						console.log('fail:login方法返回错误：', err)
+					}
+				})
 			}
 		}
 	}
