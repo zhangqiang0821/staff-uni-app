@@ -1,0 +1,17 @@
+{
+    "id": "xiaolu-tree-vue3",
+    "name": "xiaolu-tree-vue3无限级树组件，支持纯展示、单选、多选联动",
+    "displayName": "xiaolu-tree-vue3无限级树组件，支持纯展示、单选、多选联动",
+    "version": "1.0",
+    "description": "vue3版本的无限级树形结构组件，支持单选和多选组件，支持搜索，面包屑类型导航",
+    "keywords": [
+        "树形结构;面包屑导航;无限级树形结构组件;多选组件;单选组件"
+    ],
+    "dcloudext": {
+        "category": [
+            "前端组件",
+            "通用组件"
+        ]
+    },
+    "uni_modules": []
+}
