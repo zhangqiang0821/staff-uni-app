@@ -1,7 +1,7 @@
 <template>
 	<view class="container">
 		<uni-section title="个人信息" type="line">
-			<uni-forms :modelValue="formData" :rules="rules" ref="form" label-width="160">
+			<uni-forms :modelValue="formData" :rules="rules" ref="form" label-width="80px" label-align="right">
 				<uni-forms-item label="姓名" name="name" required>
 					<uni-easyinput type="text" v-model="formData.name" placeholder="请输入姓名" />
 				</uni-forms-item>
@@ -15,19 +15,25 @@
 					<uni-easyinput type="text" v-model="formData.email" placeholder="请输入邮箱" />
 				</uni-forms-item>
 				<uni-forms-item label="学历" name="education" required>
-					<uni-data-checkbox mode="button" multiple v-model="formData.education" :localdata="education"></uni-data-checkbox>
+					<uni-data-checkbox mode="button" v-model="formData.education" :localdata="education"></uni-data-checkbox>
 				</uni-forms-item>
-				<uni-forms-item label="从业时间" name="datetimesingle" required>
+				<uni-forms-item label="从业时间" name="date_list" required>
 					<uni-datetime-picker 
 						type="daterange" 
 						rangeSeparator="至"
 					 	start="2021-3-20"
 						end="2025-5-20"
-						v-model="formData.datetimesingle"
+						v-model="formData.date_list"
 					 />
 				</uni-forms-item>
-				<uni-forms-item label="从业领域" name="workingArea" required>
-					<uni-data-checkbox mode="button" multiple v-model="formData.workingArea" :localdata="workingArea"></uni-data-checkbox>
+				<uni-forms-item label="从业领域" name="work_type" required>
+					<uni-data-checkbox mode="button" multiple v-model="formData.work_type" :localdata="workType"></uni-data-checkbox>
+					<view class="other-work-type">
+						<text class="other-work-type-label">其它:</text>
+						<view class="other-work-type-input">
+							<uni-easyinput type="text" v-model="formData.email" placeholder="请输入其它领域" />
+						</view>
+					</view>
 				</uni-forms-item>
 				<uni-forms-item label="从业岗位" name="checkList" required>
 					<uni-card :is-shadow="false" margin="0px" @click="onShowTree">
@@ -35,9 +41,11 @@
 					</uni-card>
 				</uni-forms-item>
 			</uni-forms>
-			<uni-button type="primary"  @click="onSave">确定</uni-button>
+			<view class="save-btn">
+				<button type="primary"  @click="onSave">提交</button>
+			</view>
 			
-			<button @click="getUserInfoMethods">调用wx.login方法</button>
+			<!-- <button @click="getUserInfoMethods">调用wx.login方法</button> -->
 
 		</uni-section>
 		
@@ -63,45 +71,56 @@
 			return {
 				treeOpt: [
 					{
-						id: 664214366998,
-						name: "校长443",
+						id: '1',
+						name: "机械设计",
 						user: false,
 						children: [{
-							id: 885655454545454545678,
-							name: "小陆",
+							id: '1-1',
+							name: "pre",
+							user: true
+						},{
+							id: '1-2',
+							name: "pre",
+							user: true
+						}]
+					},
+					{
+						id: '2',
+						name: "视觉",
+						user: false,
+						children: [{
+							id: '2-1',
+							name: "PS",
 							user: true
 						}]
 					},
 				],
-				workingArea: [{
-					text: '修车',
-					value: 0
-				},{
+				workType: [{
 					text: '整车',
-					value: 1
+					value: 'COMPLETE_VEHICLE'
 				},{
 					text: '零部件',
-					value: 2
+					value: "COMPONENTS"
 				}],
 				education: [{
 					text: '硕士',
-					value: 0
+					value: 'MASTER'
 				},{
 					text: '本科',
-					value: 1
+					value: 'BACHELOR'
 				},{
 					text: '大专',
-					value: 2
+					value: 'JUNIOR_COLLEGE'
 				},{
 					text: '其它',
-					value: 3
+					value: 'OTHER'
 				}],
 				sex: [{
 					text: '男',
-					value: 0
+					value: 'MALE'
 				}, {
 					text: '女',
-					value: 1
+					value: 'FEMALE'
 				}],
 				rules: {
 					email: {
@@ -145,19 +164,54 @@
 
 				},
 				formData: {
-					checkList: [],
-					workingArea: [],
-					datetimesingle: [],
-					education: [],
-					email: '',
-					sex:1,
-					name: '',
+					// checkList: [],
+					// workingArea: [],
+					// datetimesingle: [],
+					// education: [],
+					// email: '',
+					// sex:1,
+					// name: '',
+					
+					"openid": "",
+					"name": "",
+					"sex": "MALE",
+					"phone": "",
+					"email": "",
+					
+					"date_list": [], // 从业时间
+					"work_start_date": "",
+					"work_end_date": "",
+					
+					"education": "", // 学历
+					"work_type": [], // 从业领域
+					"othen_work_type": '',
+					"work_position": [] , // 从业岗位
+					"othen_work_position": ''
 				},
 			}
 		},
+		computed: {
+		    workPositionLabel() {
+		      return this.formData.work_position.map(item => item.)
+		    }
+		  },
 		onLoad(){
 		},
 		methods: {
+			// https://gtq.dairoot.cn/user/user-worker-info
+			
+			// {
+			//  "name": "n2a123me",
+			//  "openid": "openweiqwed",
+			//  "sex": "MALE",
+			//  "phone": "12345678901",
+			//  "education": "education",
+			//  "work_start_date": "2015-02-10",
+			//  "work_end_date": "2015-01-11",
+			//  "email": "xxx@11.com",
+			//  "work_type": "xwork_atype",
+			//  "work_position": "work_position"
+			// }
 			onSave() {
 				uni.showLoading()
 				this.$refs.form.validate((err, formDate) => {
@@ -165,6 +219,33 @@
 					console.log(err,formDate)
 					if (!err) {
 						console.log(err,formDate)
+						uni.request({
+						    url: "https://gtq.dairoot.cn/user/user-worker-info",
+							method: "POST",
+							data: {
+							 "name": "n2a123me",
+							 "openid": "openweiqwed",
+							 "sex": "MALE",
+							 "phone": "12345678901",
+							 "education": "education",
+							 "work_start_date": "2015-02-10",
+							 "work_end_date": "2015-01-11",
+							 "email": "xxx@11.com",
+							 "work_type": "xwork_atype",
+							 "work_position": "work_position"
+							},
+						  header: {
+								'content-type': 'application/json', // 默认值
+							},
+						  })
+						  .then((res) => {
+						    // 此处的 res 参数，与使用默认方式调用时 success 回调中的 res 参数一致
+						    console.log(res.data);
+						  })
+						  .catch((err) => {
+						    // 此处的 err 参数，与使用默认方式调用时 fail 回调中的 err 参数一致
+						    console.error(err);
+						  })
 					}
 				})
 			},
@@ -182,18 +263,18 @@
 					success: (res) => {
 						console.log('success:login方法返回的值：', res)
 						if (res.code) {
-							// GET https://api.weixin.qq.com/sns/jscode2session?appid=APPID&secret=SECRET&js_code=JSCODE&grant_type=authorization_code 
-						      //发起网络请求
-							  
-						      uni.request({
-						        // url: 'https://api.weixin.qq.com/sns/jscode2session’,
-						        data: {
-									grant_type: 'authorization_code',
-									js_code: 'JSCODE',
-									secret: 'SECRET',
-									appid: 'wx1298b5933a8df337'
-						        }
-						      })
+						  uni.request({
+						      url: `https://api.weixin.qq.com/sns/jscode2session?appid=wx1298b5933a8df337&secret=05d62f57e2268e30df0de1a6942982a1&js_code=${res.code}&grant_type=authorization_code`,
+						    })
+						    .then((res) => {
+						      // 此处的 res 参数，与使用默认方式调用时 success 回调中的 res 参数一致
+						      console.log(res.data);
+						    })
+						    .catch((err) => {
+						      // 此处的 err 参数，与使用默认方式调用时 fail 回调中的 err 参数一致
+						      console.error(err);
+						    });
+
 						    } else {
 						      console.log('登录失败！' + res.errMsg)
 						    }
@@ -212,6 +293,18 @@
 	.container {
 		padding: 15px;
 		background-color: #fff;
-		
+	}
+	.other-work-type {
+		display: flex;
+		align-items: center;
+	}
+	.other-work-type-label {
+		margin-right: 12px;
+	}
+	.other-work-type-input {
+		width: 160px;
+	}
+	.save-btn {
+		margin-top: 70px;
 	}
 </style>

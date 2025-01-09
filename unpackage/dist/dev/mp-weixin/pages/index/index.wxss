@@ -1,0 +1,18 @@
+
+.container {
+		padding: 15px;
+		background-color: #fff;
+}
+.other-work-type {
+		display: flex;
+		align-items: center;
+}
+.other-work-type-label {
+		margin-right: 12px;
+}
+.other-work-type-input {
+		width: 160px;
+}
+.save-btn {
+		margin-top: 70px;
+}

@@ -1,0 +1,1 @@
+<view class="tmp-box data-v-9677f3db"><view class="filterBox data-v-9677f3db"><view class="filter-input data-v-9677f3db"><text style="color:#b8b8b8" class="iconfont icon-sousuo filterImg data-v-9677f3db"/><input class="text data-v-9677f3db" type="text" confirm-type="搜索" bindconfirm="{{a}}" placeholder="搜索" value="{{b}}" bindinput="{{c}}"/></view></view></view>
