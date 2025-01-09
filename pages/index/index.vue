@@ -37,7 +37,7 @@
 				</uni-forms-item>
 				<uni-forms-item label="从业岗位" name="checkList" required>
 					<uni-card :is-shadow="false" margin="0px" @click="onShowTree">
-						<text class="uni-body">修车</text>
+						<text class="uni-body">{{workPositionLabel}}</text>
 					</uni-card>
 				</uni-forms-item>
 			</uni-forms>
@@ -50,7 +50,7 @@
 		</uni-section>
 		
 		<uni-popup ref="popup" type="bottom" safeArea backgroundColor="#fff">
-			<tree  :checkList="formData.checkList"  v-if="treeOpt.length>0"  :options="{
+			<tree  :checkList="formData.work_position"  v-if="treeOpt.length>0"  :options="{
 				label: 'name',
 				children: 'children',
 				multiple:true,
@@ -63,6 +63,7 @@
 <script>
 	import Tree from "@/components/xiaolu-tree-vue3/tree.vue"
 	// https://ext.dcloud.net.cn/plugin?id=12067
+	import {flatObject} from "@/utils/utils.js"
 	export default {
 		components: {
 			Tree
@@ -184,15 +185,21 @@
 					
 					"education": "", // 学历
 					"work_type": [], // 从业领域
-					"othen_work_type": '',
+					"other_work_type": '',
 					"work_position": [] , // 从业岗位
-					"othen_work_position": ''
+					"other_work_position": ''
 				},
 			}
 		},
 		computed: {
-		    workPositionLabel() {
-		      return this.formData.work_position.map(item => item.)
+		    workPositionLabel() {				
+				const list = flatObject(this.treeOpt)
+				const lables = list.filter(item => this.formData.work_position.includes(item.id)).map(item => item.name).join((','))
+				// const list = Utils.flatObject(this.treeOpt)
+				// console.log(list)
+				console.log('lables',lables)
+				return lables
+		      // return this.formData.work_position.map(item => item.)
 		    }
 		  },
 		onLoad(){

@@ -1,5 +1,6 @@
 "use strict";
 const common_vendor = require("../../common/vendor.js");
+const utils_utils = require("../../utils/utils.js");
 const Tree = () => "../../components/xiaolu-tree-vue3/tree.js";
 const _sfc_main = {
   components: {
@@ -121,15 +122,19 @@ const _sfc_main = {
         // 学历
         "work_type": [],
         // 从业领域
-        "othen_work_type": "",
-        "work_position": []
+        "other_work_type": "",
+        "work_position": [],
         // 从业岗位
+        "other_work_position": ""
       }
     };
   },
   computed: {
     workPositionLabel() {
-      return this.items.length;
+      const list = utils_utils.flatObject(this.treeOpt);
+      const lables = list.filter((item) => this.formData.work_position.includes(item.id)).map((item) => item.name).join(",");
+      common_vendor.index.__f__("log", "at pages/index/index.vue:200", "lables", lables);
+      return lables;
     }
   },
   onLoad() {
@@ -152,9 +157,9 @@ const _sfc_main = {
       common_vendor.index.showLoading();
       this.$refs.form.validate((err, formDate) => {
         common_vendor.index.hideLoading();
-        common_vendor.index.__f__("log", "at pages/index/index.vue:218", err, formDate);
+        common_vendor.index.__f__("log", "at pages/index/index.vue:226", err, formDate);
         if (!err) {
-          common_vendor.index.__f__("log", "at pages/index/index.vue:220", err, formDate);
+          common_vendor.index.__f__("log", "at pages/index/index.vue:228", err, formDate);
           common_vendor.index.request({
             url: "https://gtq.dairoot.cn/user/user-worker-info",
             method: "POST",
@@ -175,15 +180,15 @@ const _sfc_main = {
               // 默认值
             }
           }).then((res) => {
-            common_vendor.index.__f__("log", "at pages/index/index.vue:242", res.data);
+            common_vendor.index.__f__("log", "at pages/index/index.vue:250", res.data);
           }).catch((err2) => {
-            common_vendor.index.__f__("error", "at pages/index/index.vue:246", err2);
+            common_vendor.index.__f__("error", "at pages/index/index.vue:254", err2);
           });
         }
       });
     },
     confirm(val) {
-      common_vendor.index.__f__("log", "at pages/index/index.vue:252", val);
+      common_vendor.index.__f__("log", "at pages/index/index.vue:260", val);
       this.$refs.popup.close();
     },
     onShowTree() {
@@ -193,21 +198,21 @@ const _sfc_main = {
       common_vendor.index.login({
         timeout: 6e3,
         success: (res) => {
-          common_vendor.index.__f__("log", "at pages/index/index.vue:263", "success:login方法返回的值：", res);
+          common_vendor.index.__f__("log", "at pages/index/index.vue:271", "success:login方法返回的值：", res);
           if (res.code) {
             common_vendor.index.request({
               url: `https://api.weixin.qq.com/sns/jscode2session?appid=wx1298b5933a8df337&secret=05d62f57e2268e30df0de1a6942982a1&js_code=${res.code}&grant_type=authorization_code`
             }).then((res2) => {
-              common_vendor.index.__f__("log", "at pages/index/index.vue:270", res2.data);
+              common_vendor.index.__f__("log", "at pages/index/index.vue:278", res2.data);
             }).catch((err) => {
-              common_vendor.index.__f__("error", "at pages/index/index.vue:274", err);
+              common_vendor.index.__f__("error", "at pages/index/index.vue:282", err);
             });
           } else {
-            common_vendor.index.__f__("log", "at pages/index/index.vue:278", "登录失败！" + res.errMsg);
+            common_vendor.index.__f__("log", "at pages/index/index.vue:286", "登录失败！" + res.errMsg);
           }
         },
         fail(err) {
-          common_vendor.index.__f__("log", "at pages/index/index.vue:283", "fail:login方法返回错误：", err);
+          common_vendor.index.__f__("log", "at pages/index/index.vue:291", "fail:login方法返回错误：", err);
         }
       });
     }
@@ -323,33 +328,34 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
       name: "work_type",
       required: true
     }),
-    y: common_vendor.o($options.onShowTree),
-    z: common_vendor.p({
+    y: common_vendor.t($options.workPositionLabel),
+    z: common_vendor.o($options.onShowTree),
+    A: common_vendor.p({
       ["is-shadow"]: false,
       margin: "0px"
     }),
-    A: common_vendor.p({
+    B: common_vendor.p({
       label: "从业岗位",
       name: "checkList",
       required: true
     }),
-    B: common_vendor.sr("form", "7525ff05-1,7525ff05-0"),
-    C: common_vendor.p({
+    C: common_vendor.sr("form", "7525ff05-1,7525ff05-0"),
+    D: common_vendor.p({
       modelValue: $data.formData,
       rules: $data.rules,
       ["label-width"]: "80px",
       ["label-align"]: "right"
     }),
-    D: common_vendor.o((...args) => $options.onSave && $options.onSave(...args)),
-    E: common_vendor.p({
+    E: common_vendor.o((...args) => $options.onSave && $options.onSave(...args)),
+    F: common_vendor.p({
       title: "个人信息",
       type: "line"
     }),
-    F: $data.treeOpt.length > 0
+    G: $data.treeOpt.length > 0
   }, $data.treeOpt.length > 0 ? {
-    G: common_vendor.o($options.confirm),
-    H: common_vendor.p({
-      checkList: $data.formData.checkList,
+    H: common_vendor.o($options.confirm),
+    I: common_vendor.p({
+      checkList: $data.formData.work_position,
       options: {
         label: "name",
         children: "children",
@@ -360,8 +366,8 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
       treeNone: $data.treeOpt
     })
   } : {}, {
-    I: common_vendor.sr("popup", "7525ff05-19"),
-    J: common_vendor.p({
+    J: common_vendor.sr("popup", "7525ff05-19"),
+    K: common_vendor.p({
       type: "bottom",
       safeArea: true,
       backgroundColor: "#fff"
