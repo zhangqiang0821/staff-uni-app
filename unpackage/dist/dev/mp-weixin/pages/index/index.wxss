@@ -3,15 +3,33 @@
 		padding: 15px;
 		background-color: #fff;
 }
-.other-work-type {
+.other-input .uni-easyinput-error {
+		color: #999!important;
+		border-color: yellow!important;
+}
+.work-position-tag {
+		margin-right: 12px;
+}
+.work-position-label-placeholder {
+		color: #999;
+}
+.other-type {
 		display: flex;
 		align-items: center;
 }
-.other-work-type-label {
+.other-label {
 		margin-right: 12px;
 }
-.other-work-type-input {
+.other-work-label {
+		/* margin-top: 6px; */
+}
+.other-position-label {
+		margin-top:6px;
+}
+.other-input {
 		width: 160px;
+		border-bottom: 1px solid #ddd;
+		padding: 8px 6px;
 }
 .save-btn {
 		margin-top: 70px;

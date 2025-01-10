@@ -26,31 +26,42 @@
 						v-model="formData.date_list"
 					 />
 				</uni-forms-item>
-				<uni-forms-item label="从业领域" name="work_type" required>
-					<uni-data-checkbox mode="button" multiple v-model="formData.work_type" :localdata="workType"></uni-data-checkbox>
-					<view class="other-work-type">
-						<text class="other-work-type-label">其它:</text>
-						<view class="other-work-type-input">
-							<uni-easyinput type="text" v-model="formData.email" placeholder="请输入其它领域" />
+				<uni-forms-item label="从业领域" name="work_type_list" required>
+					<uni-data-checkbox mode="button" multiple v-model="formData.work_type_list" :localdata="workType"></uni-data-checkbox>
+					<view class="other-type other-work-label">
+						<text class="other-label">其它:</text>
+						<view class="other-input">
+							<input type="text" v-model="formData.other_work_type" placeholder="请输入其它领域" />
 						</view>
 					</view>
 				</uni-forms-item>
-				<uni-forms-item label="从业岗位" name="checkList" required>
-					<uni-card :is-shadow="false" margin="0px" @click="onShowTree">
-						<text class="uni-body">{{workPositionLabel}}</text>
+				<uni-forms-item label="从业岗位" name="work_position_list" required>
+					<uni-card :is-shadow="false" margin="0px" @click="onShowTree" padding="6px">
+						<view class="work-position-label" v-if="workPositionLabel.length">
+							<uni-tag 
+								type="primary" 
+								v-for="item in workPositionLabel" :key="item"
+								:text="item" 
+								class="work-position-tag" ></uni-tag>
+
+						</view>
+						<view class="work-position-label-placeholder" v-else>请选择从业岗位</view>
 					</uni-card>
+					<view class="other-type other-position-label">
+						<text class="other-label">其它:</text>
+						<view class="other-input">
+							<input type="text" v-model="formData.other_work_position" placeholder="请输入其它岗位" />
+						</view>
+					</view>
 				</uni-forms-item>
 			</uni-forms>
 			<view class="save-btn">
 				<button type="primary"  @click="onSave">提交</button>
 			</view>
-			
-			<!-- <button @click="getUserInfoMethods">调用wx.login方法</button> -->
-
 		</uni-section>
 		
 		<uni-popup ref="popup" type="bottom" safeArea backgroundColor="#fff">
-			<tree  :checkList="formData.work_position"  v-if="treeOpt.length>0"  :options="{
+			<tree  :checkList="formData.work_position_list"  v-if="treeOpt.length>0"  :options="{
 				label: 'name',
 				children: 'children',
 				multiple:true,
@@ -77,11 +88,11 @@
 						user: false,
 						children: [{
 							id: '1-1',
-							name: "pre",
+							name: "pre1",
 							user: true
 						},{
 							id: '1-2',
-							name: "pre",
+							name: "pre2",
 							user: true
 						}]
 					},
@@ -91,7 +102,27 @@
 						user: false,
 						children: [{
 							id: '2-1',
-							name: "PS",
+							name: "PS1",
+							user: true
+						},{
+							id: '2-2',
+							name: "PS2",
+							user: true
+						},{
+							id: '2-3',
+							name: "PS3",
+							user: true
+						},{
+							id: '2-4',
+							name: "PS4",
+							user: true
+						},{
+							id: '2-5',
+							name: "PS5",
+							user: true
+						},{
+							id: '2-6',
+							name: "PS6",
 							user: true
 						}]
 					},
@@ -124,6 +155,56 @@
 					value: 'FEMALE'
 				}],
 				rules: {
+					work_position_list: {
+						rules: [{
+								format: 'array'
+							},
+							{
+								validateFunction: (rule, value, data, callback) => {
+									const { work_position_list,other_work_position } = this.formData
+									if (!work_position_list.length && !other_work_position) {
+										callback('请选择从业岗位')
+									}
+									return true
+								}
+							}
+						]
+					},
+					work_type_list: {
+						rules: [{
+								format: 'array'
+							},
+							{
+								validateFunction: (rule, value, data, callback) => {
+									const { work_type_list,other_work_type } = this.formData
+									if (!work_type_list.length && !other_work_type) {
+										callback('请选择从业领域')
+									}
+									return true
+								}
+							}
+						]
+					},
+					date_list: {
+						rules: [{
+								format: 'array'
+							},
+							{
+								validateFunction: function(rule, value, data, callback) {
+									if (!value.length) {
+										callback('请选择从业时间')
+									}
+									return true
+								}
+							}
+						]
+					},
+					education: {
+						rules: [{
+							required: true,
+							errorMessage: '请选择学历',
+						}]
+					},
 					email: {
 						rules: [{
 							format: 'email',
@@ -148,31 +229,9 @@
 							errorMessage: '请输入姓名'
 						}]
 					},
-					// hobby: {
-					// 	rules: [{
-					// 			format: 'array'
-					// 		},
-					// 		{
-					// 			validateFunction: function(rule, value, data, callback) {
-					// 				if (value.length < 2) {
-					// 					callback('请至少勾选两个兴趣爱好')
-					// 				}
-					// 				return true
-					// 			}
-					// 		}
-					// 	]
-					// }
 
 				},
 				formData: {
-					// checkList: [],
-					// workingArea: [],
-					// datetimesingle: [],
-					// education: [],
-					// email: '',
-					// sex:1,
-					// name: '',
-					
 					"openid": "",
 					"name": "",
 					"sex": "MALE",
@@ -184,111 +243,146 @@
 					"work_end_date": "",
 					
 					"education": "", // 学历
-					"work_type": [], // 从业领域
+					"work_type_list": [], // 从业领域
 					"other_work_type": '',
-					"work_position": [] , // 从业岗位
+					"work_position_list": [] , // 从业岗位
 					"other_work_position": ''
 				},
 			}
 		},
 		computed: {
-		    workPositionLabel() {				
-				const list = flatObject(this.treeOpt)
-				const lables = list.filter(item => this.formData.work_position.includes(item.id)).map(item => item.name).join((','))
-				// const list = Utils.flatObject(this.treeOpt)
-				// console.log(list)
-				console.log('lables',lables)
-				return lables
-		      // return this.formData.work_position.map(item => item.)
+		    workPositionLabel() {
+				const { work_position_list } = this.formData
+				return work_position_list.map(item => item.name)
 		    }
 		  },
 		onLoad(){
 		},
 		methods: {
-			// https://gtq.dairoot.cn/user/user-worker-info
-			
-			// {
-			//  "name": "n2a123me",
-			//  "openid": "openweiqwed",
-			//  "sex": "MALE",
-			//  "phone": "12345678901",
-			//  "education": "education",
-			//  "work_start_date": "2015-02-10",
-			//  "work_end_date": "2015-01-11",
-			//  "email": "xxx@11.com",
-			//  "work_type": "xwork_atype",
-			//  "work_position": "work_position"
-			// }
 			onSave() {
-				uni.showLoading()
+				// https://gtq.dairoot.cn/user/user-worker-info
+				
+				// {
+				// 	 "name": "n2a123me",
+				// 	 "openid": "openweiqwed",
+				// 	 "sex": "MALE",
+				// 	 "phone": "12345678901",
+				// 	 "education": "education",
+				// 	 "work_start_date": "2015-02-10",
+				// 	 "work_end_date": "2015-01-11",
+				// 	 "email": "xxx@11.com",
+				// 	 "other_work_type": "xwork_atype",
+				// 	 "other_work_position": "work_position",
+					
+					
+				// 	"work_type_list": [],
+				// 	"work_position_list": [].
+				// }
 				this.$refs.form.validate((err, formDate) => {
-					uni.hideLoading()
 					console.log(err,formDate)
 					if (!err) {
 						console.log(err,formDate)
-						uni.request({
-						    url: "https://gtq.dairoot.cn/user/user-worker-info",
-							method: "POST",
-							data: {
-							 "name": "n2a123me",
-							 "openid": "openweiqwed",
-							 "sex": "MALE",
-							 "phone": "12345678901",
-							 "education": "education",
-							 "work_start_date": "2015-02-10",
-							 "work_end_date": "2015-01-11",
-							 "email": "xxx@11.com",
-							 "work_type": "xwork_atype",
-							 "work_position": "work_position"
-							},
-						  header: {
-								'content-type': 'application/json', // 默认值
-							},
-						  })
-						  .then((res) => {
-						    // 此处的 res 参数，与使用默认方式调用时 success 回调中的 res 参数一致
-						    console.log(res.data);
-						  })
-						  .catch((err) => {
-						    // 此处的 err 参数，与使用默认方式调用时 fail 回调中的 err 参数一致
-						    console.error(err);
-						  })
+						this.getUserInfoMethods((openidInfo) => {
+							console.log(openidInfo)
+							if (!(openidInfo.data && openidInfo.data.openid)) {
+								uni.showToast({
+									icon: 'none',
+									duration: 3000,
+									title: openidInfo
+								});
+								return 
+							}
+							const {name,sex,phone,email,date_list,education,work_type_list,other_work_type,work_position_list,other_work_position} = this.formData
+							const [work_start_date,work_end_date] = date_list
+							
+							let postData = {
+								 "openid": openidInfo.data.openid,
+								name,
+								sex,
+								phone,
+								email,
+								education,
+								work_start_date,
+								work_end_date,
+								work_type_list,
+								other_work_type,
+								other_work_position
+							}
+							if(work_position_list.length) {
+								postData.work_position_list = work_position_list.map(item => item.id)
+							}
+							uni.showLoading()
+							uni.request({
+								url: "https://gtq.dairoot.cn/user/user-worker-info",
+								method: "POST",
+								data: postData,
+								header: {
+									'content-type': 'application/json', // 默认值
+								},
+							}).then((res) => {
+								uni.hideLoading()
+								// 此处的 res 参数，与使用默认方式调用时 success 回调中的 res 参数一致
+								if (res.statusCode === 200) {
+									uni.showToast({
+										icon: 'none',
+										duration: 3000,
+										title: '提交成功'
+									});
+								} else {
+									uni.showToast({
+										icon: 'none',
+										duration: 3000,
+										title: JSON.stringify(res.data)
+									});
+								}
+								console.log(res)
+								console.log(res.data);
+							
+							  })
+							  .catch((err) => {
+								uni.hideLoading()
+								// 此处的 err 参数，与使用默认方式调用时 fail 回调中的 err 参数一致
+								console.error(err);
+							  })
+						})
 					}
 				})
 			},
 			confirm(val) {
 				console.log(val)
+				this.formData.work_position = val
 				this.$refs.popup.close()
 			},
 			onShowTree() {
 				this.$refs.popup.open()
 			},
 			
-			getUserInfoMethods() {
+			getUserInfoMethods(callBack) {
 				uni.login({
 					timeout: 6000,
 					success: (res) => {
 						console.log('success:login方法返回的值：', res)
 						if (res.code) {
-						  uni.request({
-						      url: `https://api.weixin.qq.com/sns/jscode2session?appid=wx1298b5933a8df337&secret=05d62f57e2268e30df0de1a6942982a1&js_code=${res.code}&grant_type=authorization_code`,
-						    })
-						    .then((res) => {
-						      // 此处的 res 参数，与使用默认方式调用时 success 回调中的 res 参数一致
-						      console.log(res.data);
-						    })
-						    .catch((err) => {
-						      // 此处的 err 参数，与使用默认方式调用时 fail 回调中的 err 参数一致
-						      console.error(err);
-						    });
-
-						    } else {
-						      console.log('登录失败！' + res.errMsg)
-						    }
-						
+							uni.showLoading()
+							uni.request({
+							  url: `https://api.weixin.qq.com/sns/jscode2session?appid=wx1298b5933a8df337&secret=05d62f57e2268e30df0de1a6942982a1&js_code=${res.code}&grant_type=authorization_code`,
+							})
+							.then((res) => {
+								uni.hideLoading()
+							    callBack&&callBack(res)
+							})
+							.catch((err) => {
+								uni.hideLoading()
+								callBack&&callBack(err)
+							});
+						} else {
+						  console.log('登录失败！' + res.errMsg)
+						  callBack&&callBack(res.errMsg)
+						}
 					},
 					fail(err) {
 						console.log('fail:login方法返回错误：', err)
+						callBack&&callBack(err)
 					}
 				})
 			}
@@ -301,15 +395,33 @@
 		padding: 15px;
 		background-color: #fff;
 	}
-	.other-work-type {
+	.other-input .uni-easyinput-error {
+		color: #999!important;
+		border-color: yellow!important;
+	}
+	.work-position-tag {
+		margin-right: 12px;
+	}
+	.work-position-label-placeholder {
+		color: #999;
+	}
+	.other-type {
 		display: flex;
 		align-items: center;
 	}
-	.other-work-type-label {
+	.other-label {
 		margin-right: 12px;
 	}
-	.other-work-type-input {
+	.other-work-label {
+		/* margin-top: 6px; */
+	}
+	.other-position-label {
+		margin-top:6px;
+	}
+	.other-input {
 		width: 160px;
+		border-bottom: 1px solid #ddd;
+		padding: 8px 6px;
 	}
 	.save-btn {
 		margin-top: 70px;
