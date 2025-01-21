@@ -1,42 +1,88 @@
 <template>
 	<view class="container">
 		<uni-section title="个人信息" type="line">
-			<uni-forms :modelValue="formData" :rules="rules" ref="form" label-width="80px" label-align="right">
+			<uni-forms :modelValue="formData" :rules="rules" ref="form" label-width="76px" label-align="right">
 				<uni-forms-item label="姓名" name="name" required>
 					<uni-easyinput type="text" v-model="formData.name" placeholder="请输入姓名" />
 				</uni-forms-item>
 				<uni-forms-item label="性别" name="sex" required>
 					<uni-data-checkbox mode="button" v-model="formData.sex" :localdata="sex"></uni-data-checkbox>
 				</uni-forms-item>
+				
+				<uni-forms-item label="出生年月" name="phone" required>
+					{{formData.csny}}
+					<uni-datetime-picker type="date" clear-icon v-model="formData.csny" @maskClick="maskClick" />
+				</uni-forms-item>
+				
 				<uni-forms-item label="电话" name="phone" required>
 					<uni-easyinput type="text" v-model="formData.phone" placeholder="请输入电话" />
 				</uni-forms-item>
 				<uni-forms-item label="邮箱" name="email">
 					<uni-easyinput type="text" v-model="formData.email" placeholder="请输入邮箱" />
 				</uni-forms-item>
+				
+				<uni-forms-item label="优选工作城市" name="yxgzcs">
+					{{formData.yxgzcs}}
+					<uni-easyinput type="text" v-model="formData.yxgzcs" placeholder="请输入优选工作城市" />
+				</uni-forms-item>
+				
 				<uni-forms-item label="学历" name="education" required>
 					<uni-data-checkbox mode="button" v-model="formData.education" :localdata="education"></uni-data-checkbox>
 				</uni-forms-item>
+				
+				<uni-forms-item label="签证" name="qz" required>
+					<view class="visa-list">
+						<view class="visa-item" v-for="(item,idx) in formData.visaList">
+							<view class="visa-country">
+								<uni-easyinput type="text" v-model="item.qzgj" placeholder="签证国家" />
+							</view>
+							<view class="visa-validity">
+								<uni-datetime-picker
+									type="daterange" 
+									rangeSeparator="至"
+									start="2021-3-20"
+									end="2025-5-20"
+									v-model="item.date_list"
+								 />
+							</view>
+							<uni-icons type="clear" size="30" v-if="idx>0" @click="onDelVisa(idx)"></uni-icons>
+						</view>
+					</view>
+					<view class="visa-add">
+						<button type="primary" size="mini"  @click="onAddVisa">增加签证</button>
+					</view>
+				</uni-forms-item>
+				
 				<uni-forms-item label="从业时间" name="date_list" required>
 					<uni-datetime-picker 
 						type="daterange" 
 						rangeSeparator="至"
-					 	start="2021-3-20"
+						start="2021-3-20"
 						end="2025-5-20"
 						v-model="formData.date_list"
 					 />
 				</uni-forms-item>
 				<uni-forms-item label="从业领域" name="work_type_list" required>
-					<uni-data-checkbox mode="button" multiple v-model="formData.work_type_list" :localdata="workType"></uni-data-checkbox>
-					<view class="other-type other-work-label">
+					<uni-card :is-shadow="false" margin="0px" @click="onShowWorkType" padding="6px">
+						<view class="work-position-label" v-if="workTypeLabel.length">
+							<uni-tag 
+								type="primary" 
+								v-for="item in workTypeLabel" :key="item"
+								:text="item" 
+								class="work-position-tag" ></uni-tag>
+				
+						</view>
+						<view class="work-position-label-placeholder" v-else>请选择从业领域</view>
+					</uni-card>
+					<view class="other-type other-position-label">
 						<text class="other-label">其它:</text>
 						<view class="other-input">
-							<input type="text" v-model="formData.other_work_type" placeholder="请输入其它领域" />
+							<input type="text" v-model="formData.other_work_type" placeholder="请输入其它岗位" />
 						</view>
 					</view>
 				</uni-forms-item>
 				<uni-forms-item label="从业岗位" name="work_position_list" required>
-					<uni-card :is-shadow="false" margin="0px" @click="onShowTree" padding="6px">
+					<uni-card :is-shadow="false" margin="0px" @click="onShowWorkPosition" padding="6px">
 						<view class="work-position-label" v-if="workPositionLabel.length">
 							<uni-tag 
 								type="primary" 
@@ -55,19 +101,32 @@
 					</view>
 				</uni-forms-item>
 			</uni-forms>
-			<view class="save-btn">
-				<button type="primary"  @click="onSave">提交</button>
-			</view>
 		</uni-section>
+		<view class="save-btn">
+			<button type="primary"  @click="onSave">提交</button>
+		</view>
 		
-		<uni-popup ref="popup" type="bottom" safeArea backgroundColor="#fff">
-			<tree  :checkList="formData.work_position_list"  v-if="treeOpt.length>0"  :options="{
+		<!-- 从业领域 start -->
+		<uni-popup ref="workType" type="bottom" safeArea backgroundColor="#fff">
+			<tree  :checkList="formData.work_type_list"  v-if="workTypeOpt.length>0"  :options="{
 				label: 'name',
 				children: 'children',
 				multiple:true,
 				checkStrictly:true
-			}" @sendValue="confirm"  :isCheck="true" :treeNone="treeOpt"></tree>
+			}" @sendValue="confirm"  :isCheck="true" :treeNone="workTypeOpt"></tree>
 		</uni-popup>
+		<!-- 从业领域 end -->
+		
+		<!-- 从业岗位 start -->
+		<uni-popup ref="workPosition" type="bottom" safeArea backgroundColor="#fff">
+			<tree  :checkList="formData.work_position_list"  v-if="workPositionOpt.length>0"  :options="{
+				label: 'name',
+				children: 'children',
+				multiple:true,
+				checkStrictly:true
+			}" @sendValue="confirm"  :isCheck="true" :treeNone="workPositionOpt"></tree>
+		</uni-popup>
+		<!-- 从业岗位 end -->
 	</view>
 </template>
 
@@ -81,7 +140,8 @@
 		},
 		data() {
 			return {
-				treeOpt: [
+				workTypeOpt: [],
+				workPositionOpt: [
 					{
 						id: '1',
 						name: "机械设计",
@@ -135,16 +195,16 @@
 					value: "COMPONENTS"
 				}],
 				education: [{
-					text: '硕士',
+					text: '研究生',
 					value: 'MASTER'
 				},{
 					text: '本科',
 					value: 'BACHELOR'
 				},{
-					text: '大专',
+					text: '专科',
 					value: 'JUNIOR_COLLEGE'
 				},{
-					text: '其它',
+					text: '其他',
 					value: 'OTHER'
 				}],
 				sex: [{
@@ -232,25 +292,37 @@
 
 				},
 				formData: {
-					"openid": "",
-					"name": "",
-					"sex": "MALE",
-					"phone": "",
-					"email": "",
-					
+					"visaList": [{
+						"date_list": [],
+						"qzgj": "",
+						
+					}],
 					"date_list": [], // 从业时间
-					"work_start_date": "",
-					"work_end_date": "",
+					"work_start_date": "", // 从业开始时间
+					"work_end_date": "", // 从业结束时间
+					
+					"yxgzcs": "", // 优选工作城市
+					"csny":"", // 出生年月
+					
+					"name": "", // 姓名
+					"sex": "MALE",  // 性别
+					"phone": "", // 手机号
+					"email": "", // 邮箱
 					
 					"education": "", // 学历
 					"work_type_list": [], // 从业领域
-					"other_work_type": '',
+					"other_work_type": '', // 
 					"work_position_list": [] , // 从业岗位
-					"other_work_position": ''
+					"other_work_position": '', // 其它岗位
+					"openid": "", // 用户微信唯一id
 				},
 			}
 		},
 		computed: {
+			workTypeLabel() {
+				const { work_type_list } = this.formData
+				return work_type_list.map(item => item.name)
+			},
 		    workPositionLabel() {
 				const { work_position_list } = this.formData
 				return work_position_list.map(item => item.name)
@@ -259,6 +331,16 @@
 		onLoad(){
 		},
 		methods: {
+			onDelVisa(idx) {
+				this.formData.visaList.splice(idx, 1)
+			},
+			onAddVisa() {
+				console.log('------', this.formData)
+				this.formData.visaList.push({
+					qzgj: "",
+					date_list: [],
+				})
+			},
 			onSave() {
 				// https://gtq.dairoot.cn/user/user-worker-info
 				
@@ -353,10 +435,12 @@
 				this.formData.work_position = val
 				this.$refs.popup.close()
 			},
-			onShowTree() {
-				this.$refs.popup.open()
+			onShowWorkPosition() {
+				this.$refs.workPosition.open()
 			},
-			
+			onShowWorkType() {
+				this.$refs.workType.open()
+			},
 			getUserInfoMethods(callBack) {
 				uni.login({
 					timeout: 6000,
@@ -391,6 +475,19 @@
 </script>
 
 <style>
+	.visa-add {
+		margin-top: 12rpx;
+	}
+	.visa-item .visa-validity {
+		width: 230px;
+	}
+	.visa-item .visa-country {
+		width: 120rpx;
+	}
+	.visa-list .visa-item {
+		display: flex;
+		flex-direction: row;
+	}
 	.container {
 		padding: 15px;
 		background-color: #fff;

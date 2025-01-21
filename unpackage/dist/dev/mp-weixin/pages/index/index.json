@@ -6,6 +6,7 @@
     "uni-forms-item": "../../uni_modules/uni-forms/components/uni-forms-item/uni-forms-item",
     "uni-data-checkbox": "../../uni_modules/uni-data-checkbox/components/uni-data-checkbox/uni-data-checkbox",
     "uni-datetime-picker": "../../uni_modules/uni-datetime-picker/components/uni-datetime-picker/uni-datetime-picker",
+    "uni-icons": "../../uni_modules/uni-icons/components/uni-icons/uni-icons",
     "uni-tag": "../../uni_modules/uni-tag/components/uni-tag/uni-tag",
     "uni-card": "../../uni_modules/uni-card/components/uni-card/uni-card",
     "uni-forms": "../../uni_modules/uni-forms/components/uni-forms/uni-forms",

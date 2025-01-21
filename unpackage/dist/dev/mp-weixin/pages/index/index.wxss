@@ -1,4 +1,17 @@
 
+.visa-add {
+		margin-top: 12rpx;
+}
+.visa-item .visa-validity {
+		width: 230px;
+}
+.visa-item .visa-country {
+		width: 120rpx;
+}
+.visa-list .visa-item {
+		display: flex;
+		flex-direction: row;
+}
 .container {
 		padding: 15px;
 		background-color: #fff;
