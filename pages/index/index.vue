@@ -635,49 +635,49 @@
 					"work_position_list": [
 					  {
 						"id": "1-1-4",
-						"name": "CATIA",
-						"user": true,
-						"bx": 0,
-						"qx": 0,
-						"path": [
-						  {
-							"id": "1",
-							"name": "机械设计",
-							"user": false,
-							"bx": 0,
-							"qx": 0
-						  },
-						  {
-							"id": "1-1",
-							"name": "擅长软件",
-							"user": false,
-							"qx": 0,
-							"bx": 0
-						  }
-						]
+						// "name": "CATIA",
+						// "user": true,
+						// "bx": 0,
+						// "qx": 0,
+						// "path": [
+						//   {
+						// 	"id": "1",
+						// 	"name": "机械设计",
+						// 	"user": false,
+						// 	"bx": 0,
+						// 	"qx": 0
+						//   },
+						//   {
+						// 	"id": "1-1",
+						// 	"name": "擅长软件",
+						// 	"user": false,
+						// 	"qx": 0,
+						// 	"bx": 0
+						//   }
+						// ]
 					  },
 					  {
 						"id": "1-1-5",
-						"name": "3ds Max",
-						"user": true,
-						"bx": 0,
-						"qx": 0,
-						"path": [
-						  {
-							"id": "1",
-							"name": "机械设计",
-							"user": false,
-							"bx": 0,
-							"qx": 0
-						  },
-						  {
-							"id": "1-1",
-							"name": "擅长软件",
-							"user": false,
-							"qx": 0,
-							"bx": 0
-						  }
-						]
+						// "name": "3ds Max",
+						// "user": true,
+						// "bx": 0,
+						// "qx": 0,
+						// "path": [
+						//   {
+						// 	"id": "1",
+						// 	"name": "机械设计",
+						// 	"user": false,
+						// 	"bx": 0,
+						// 	"qx": 0
+						//   },
+						//   {
+						// 	"id": "1-1",
+						// 	"name": "擅长软件",
+						// 	"user": false,
+						// 	"qx": 0,
+						// 	"bx": 0
+						//   }
+						// ]
 					  }
 					] , // 从业岗位
 					"other_work_position": '', // 其它岗位
