@@ -532,8 +532,8 @@ const _sfc_main = {
             // ]
           },
           {
-            "id": "1-1-5"
-            // "name": "3ds Max",
+            // "id": "1-1-5",
+            "name": "3ds Max"
             // "user": true,
             // "bx": 0,
             // "qx": 0,
