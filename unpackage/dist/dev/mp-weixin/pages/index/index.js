@@ -7,7 +7,37 @@ const _sfc_main = {
   },
   data() {
     return {
-      workTypeOpt: [],
+      workTypeOpt: [
+        {
+          id: "1",
+          name: "汽车",
+          user: false,
+          children: [{
+            id: "1-1",
+            name: "整车",
+            user: true
+          }, {
+            id: "1-2",
+            name: "零部件",
+            user: true
+          }]
+        },
+        {
+          id: "2",
+          name: "食品",
+          user: true
+        },
+        {
+          id: "3",
+          name: "机加工",
+          user: true
+        },
+        {
+          id: "4",
+          name: "机械制造",
+          user: true
+        }
+      ],
       workPositionOpt: [
         {
           id: "1",
@@ -15,43 +45,331 @@ const _sfc_main = {
           user: false,
           children: [{
             id: "1-1",
-            name: "pre1",
-            user: true
-          }, {
-            id: "1-2",
-            name: "pre2",
-            user: true
+            name: "擅长软件",
+            user: false,
+            children: [{
+              id: "1-1-1",
+              name: "SolidWorks",
+              user: true
+            }, {
+              id: "1-1-2",
+              name: "UG",
+              user: true
+            }, {
+              id: "1-1-3",
+              name: "Siemens NX",
+              user: true
+            }, {
+              id: "1-1-4",
+              name: "CATIA",
+              user: true
+            }, {
+              id: "1-1-5",
+              name: "3ds Max",
+              user: true
+            }, {
+              id: "1-1-6",
+              name: "CAD",
+              user: true
+            }]
           }]
         },
         {
           id: "2",
-          name: "视觉",
+          name: "仿真",
           user: false,
           children: [{
             id: "2-1",
-            name: "PS1",
-            user: true
-          }, {
-            id: "2-2",
-            name: "PS2",
-            user: true
-          }, {
-            id: "2-3",
-            name: "PS3",
-            user: true
-          }, {
-            id: "2-4",
-            name: "PS4",
-            user: true
-          }, {
-            id: "2-5",
-            name: "PS5",
-            user: true
-          }, {
-            id: "2-6",
-            name: "PS6",
-            user: true
+            name: "擅长软件",
+            user: false,
+            children: [{
+              id: "2-1-1",
+              name: "RobotStudio",
+              user: true
+            }, {
+              id: "2-1-2",
+              name: "PD",
+              user: true
+            }, {
+              id: "2-1-3",
+              name: "PS",
+              user: true
+            }, {
+              id: "2-1-4",
+              name: "Roboguide",
+              user: true
+            }, {
+              id: "2-1-5",
+              name: "WorkVisual",
+              user: true
+            }]
           }]
+        },
+        {
+          id: "3",
+          name: "机器人调试",
+          user: false,
+          children: [
+            {
+              id: "3-1",
+              name: "擅长品牌",
+              user: false,
+              children: [{
+                id: "3-1-1",
+                name: "FANUC",
+                user: true
+              }, {
+                id: "3-1-2",
+                name: "ABB",
+                user: true
+              }, {
+                id: "3-1-3",
+                name: "KUKA",
+                user: true
+              }, {
+                id: "3-1-4",
+                name: "NACHI",
+                user: true
+              }, {
+                id: "3-1-5",
+                name: "Yaskawa",
+                user: true
+              }, {
+                id: "3-1-6",
+                name: "Panasonic",
+                user: true
+              }, {
+                id: "3-1-7",
+                name: "ESTUN",
+                user: true
+              }, {
+                id: "3-1-8",
+                name: "Epson",
+                user: true
+              }]
+            },
+            {
+              id: "3-2",
+              name: "擅长工艺",
+              user: false,
+              children: [{
+                id: "3-2-1",
+                name: "搬运应用",
+                user: true
+              }, {
+                id: "3-2-2",
+                name: "涂胶应用",
+                user: true
+              }, {
+                id: "3-2-3",
+                name: "滚边应用",
+                user: true
+              }, {
+                id: "3-2-4",
+                name: "点焊应用",
+                user: true
+              }, {
+                id: "3-2-5",
+                name: "激光焊应用",
+                user: true
+              }, {
+                id: "3-2-6",
+                name: "弧焊应用",
+                user: true
+              }, {
+                id: "3-2-7",
+                name: "视觉应用",
+                user: true
+              }, {
+                id: "3-2-8",
+                name: "FDS应用",
+                user: true
+              }, {
+                id: "3-2-9",
+                name: "SPR应用",
+                user: true
+              }, {
+                id: "3-2-10",
+                name: "搅拌摩擦焊应用",
+                user: true
+              }]
+            },
+            {
+              id: "3-3",
+              name: "擅长标准",
+              user: false,
+              children: [{
+                id: "3-3-1",
+                name: "大众标准(有证书)",
+                user: true
+              }, {
+                id: "3-3-2",
+                name: "大众标准(无证书)",
+                user: true
+              }, {
+                id: "3-3-3",
+                name: "TESLA标准(有证书)",
+                user: true
+              }, {
+                id: "3-3-4",
+                name: "TESLA标准(无证书)",
+                user: true
+              }, {
+                id: "3-3-5",
+                name: "奔驰标准(有证书)",
+                user: true
+              }, {
+                id: "3-3-6",
+                name: "奔驰标准(无证书)",
+                user: true
+              }, {
+                id: "3-3-7",
+                name: "宝马标准(有证书)",
+                user: true
+              }, {
+                id: "3-3-8",
+                name: "宝马标准(无证书)",
+                user: true
+              }, {
+                id: "3-3-9",
+                name: "奇瑞标准(有证书)",
+                user: true
+              }, {
+                id: "3-3-10",
+                name: "奇瑞标准(无证书)",
+                user: true
+              }, {
+                id: "3-3-11",
+                name: "吉利标准(有证书)",
+                user: true
+              }, {
+                id: "3-3-12",
+                name: "吉利标准(无证书)",
+                user: true
+              }, {
+                id: "3-3-13",
+                name: "长城标准(有证书)",
+                user: true
+              }, {
+                id: "3-3-14",
+                name: "长城标准(无证书)",
+                user: true
+              }, {
+                id: "3-3-15",
+                name: "上汽通用标准(有证书)",
+                user: true
+              }, {
+                id: "3-3-16",
+                name: "上汽通用标准(无证书)",
+                user: true
+              }, {
+                id: "3-3-17",
+                name: "赛力斯标准(有证书)",
+                user: true
+              }, {
+                id: "3-3-18",
+                name: "赛力斯标准(无证书)",
+                user: true
+              }, {
+                id: "3-3-19",
+                name: "比亚迪标准",
+                user: true
+              }, {
+                id: "3-3-20",
+                name: "北汽标准",
+                user: true
+              }]
+            },
+            {
+              id: "3-4",
+              name: "电气调试",
+              user: false,
+              children: [{
+                id: "3-4-1",
+                name: "擅长软件",
+                user: false,
+                children: [{
+                  id: "3-4-1-1",
+                  name: "Siemens",
+                  user: true
+                }, {
+                  id: "3-4-1-2",
+                  name: "OMRON",
+                  user: true
+                }, {
+                  id: "3-4-1-3",
+                  name: "Schneider",
+                  user: true
+                }, {
+                  id: "3-4-1-4",
+                  name: "AB",
+                  user: true
+                }, {
+                  id: "3-4-1-5",
+                  name: "汇川",
+                  user: true
+                }, {
+                  id: "3-4-1-6",
+                  name: "Mitsubishi",
+                  user: true
+                }]
+              }]
+            },
+            {
+              id: "3-5",
+              name: "安装",
+              user: false,
+              children: [{
+                id: "3-5-1",
+                name: "电气",
+                user: false,
+                children: [{
+                  id: "3-5-1-1",
+                  name: "电工证(有)",
+                  user: true
+                }, {
+                  id: "3-5-1-2",
+                  name: "电工证(无)",
+                  user: true
+                }, {
+                  id: "3-5-1-3",
+                  name: "盘柜",
+                  user: true
+                }, {
+                  id: "3-5-1-4",
+                  name: "现场安装",
+                  user: true
+                }]
+              }]
+            },
+            {
+              id: "3-6",
+              name: "机械",
+              user: false,
+              children: [{
+                id: "3-6-1",
+                name: "电气",
+                user: false,
+                children: [{
+                  id: "3-6-1-1",
+                  name: "有证",
+                  user: true
+                }, {
+                  id: "3-6-1-2",
+                  name: "无证",
+                  user: true
+                }, {
+                  id: "3-6-1-3",
+                  name: "气路安装",
+                  user: true
+                }, {
+                  id: "3-6-1-4",
+                  name: "机械安装",
+                  user: true
+                }]
+              }]
+            }
+          ]
         }
       ],
       workType: [{
@@ -189,7 +507,54 @@ const _sfc_main = {
         // 从业领域
         "other_work_type": "",
         // 
-        "work_position_list": [],
+        "work_position_list": [
+          {
+            "id": "1-1-4",
+            "name": "CATIA",
+            "user": true,
+            "bx": 0,
+            "qx": 0,
+            "path": [
+              {
+                "id": "1",
+                "name": "机械设计",
+                "user": false,
+                "bx": 0,
+                "qx": 0
+              },
+              {
+                "id": "1-1",
+                "name": "擅长软件",
+                "user": false,
+                "qx": 0,
+                "bx": 0
+              }
+            ]
+          },
+          {
+            "id": "1-1-5",
+            "name": "3ds Max",
+            "user": true,
+            "bx": 0,
+            "qx": 0,
+            "path": [
+              {
+                "id": "1",
+                "name": "机械设计",
+                "user": false,
+                "bx": 0,
+                "qx": 0
+              },
+              {
+                "id": "1-1",
+                "name": "擅长软件",
+                "user": false,
+                "qx": 0,
+                "bx": 0
+              }
+            ]
+          }
+        ],
         // 从业岗位
         "other_work_position": "",
         // 其它岗位
@@ -215,7 +580,7 @@ const _sfc_main = {
       this.formData.visaList.splice(idx, 1);
     },
     onAddVisa() {
-      common_vendor.index.__f__("log", "at pages/index/index.vue:338", "------", this.formData);
+      common_vendor.index.__f__("log", "at pages/index/index.vue:705", "------", this.formData);
       this.formData.visaList.push({
         qzgj: "",
         date_list: []
@@ -223,11 +588,11 @@ const _sfc_main = {
     },
     onSave() {
       this.$refs.form.validate((err, formDate) => {
-        common_vendor.index.__f__("log", "at pages/index/index.vue:364", err, formDate);
+        common_vendor.index.__f__("log", "at pages/index/index.vue:731", err, formDate);
         if (!err) {
-          common_vendor.index.__f__("log", "at pages/index/index.vue:366", err, formDate);
+          common_vendor.index.__f__("log", "at pages/index/index.vue:733", err, formDate);
           this.getUserInfoMethods((openidInfo) => {
-            common_vendor.index.__f__("log", "at pages/index/index.vue:368", openidInfo);
+            common_vendor.index.__f__("log", "at pages/index/index.vue:735", openidInfo);
             if (!(openidInfo.data && openidInfo.data.openid)) {
               common_vendor.index.showToast({
                 icon: "none",
@@ -278,20 +643,25 @@ const _sfc_main = {
                   title: JSON.stringify(res.data)
                 });
               }
-              common_vendor.index.__f__("log", "at pages/index/index.vue:420", res);
-              common_vendor.index.__f__("log", "at pages/index/index.vue:421", res.data);
+              common_vendor.index.__f__("log", "at pages/index/index.vue:787", res);
+              common_vendor.index.__f__("log", "at pages/index/index.vue:788", res.data);
             }).catch((err2) => {
               common_vendor.index.hideLoading();
-              common_vendor.index.__f__("error", "at pages/index/index.vue:427", err2);
+              common_vendor.index.__f__("error", "at pages/index/index.vue:794", err2);
             });
           });
         }
       });
     },
-    confirm(val) {
-      common_vendor.index.__f__("log", "at pages/index/index.vue:434", val);
-      this.formData.work_position = val;
-      this.$refs.popup.close();
+    onConfirmWorkPosition(val) {
+      common_vendor.index.__f__("log", "at pages/index/index.vue:801", val);
+      this.formData.work_position_list = val;
+      this.$refs.workPosition.close();
+    },
+    onConfirmWorkType(val) {
+      common_vendor.index.__f__("log", "at pages/index/index.vue:806", val);
+      this.formData.work_type_list = val;
+      this.$refs.workType.close();
     },
     onShowWorkPosition() {
       this.$refs.workPosition.open();
@@ -303,7 +673,7 @@ const _sfc_main = {
       common_vendor.index.login({
         timeout: 6e3,
         success: (res) => {
-          common_vendor.index.__f__("log", "at pages/index/index.vue:448", "success:login方法返回的值：", res);
+          common_vendor.index.__f__("log", "at pages/index/index.vue:820", "success:login方法返回的值：", res);
           if (res.code) {
             common_vendor.index.showLoading();
             common_vendor.index.request({
@@ -316,12 +686,12 @@ const _sfc_main = {
               callBack && callBack(err);
             });
           } else {
-            common_vendor.index.__f__("log", "at pages/index/index.vue:463", "登录失败！" + res.errMsg);
+            common_vendor.index.__f__("log", "at pages/index/index.vue:835", "登录失败！" + res.errMsg);
             callBack && callBack(res.errMsg);
           }
         },
         fail(err) {
-          common_vendor.index.__f__("log", "at pages/index/index.vue:468", "fail:login方法返回错误：", err);
+          common_vendor.index.__f__("log", "at pages/index/index.vue:840", "fail:login方法返回错误：", err);
           callBack && callBack(err);
         }
       });
@@ -546,10 +916,11 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
       type: "line"
     }),
     W: common_vendor.o((...args) => $options.onSave && $options.onSave(...args)),
-    X: $data.workTypeOpt.length > 0
+    X: common_vendor.t($data.formData.work_type_list),
+    Y: $data.workTypeOpt.length > 0
   }, $data.workTypeOpt.length > 0 ? {
-    Y: common_vendor.o($options.confirm),
-    Z: common_vendor.p({
+    Z: common_vendor.o($options.onConfirmWorkType),
+    aa: common_vendor.p({
       checkList: $data.formData.work_type_list,
       options: {
         label: "name",
@@ -561,16 +932,17 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
       treeNone: $data.workTypeOpt
     })
   } : {}, {
-    aa: common_vendor.sr("workType", "7525ff05-28"),
-    ab: common_vendor.p({
+    ab: common_vendor.sr("workType", "7525ff05-28"),
+    ac: common_vendor.p({
       type: "bottom",
       safeArea: true,
       backgroundColor: "#fff"
     }),
-    ac: $data.workPositionOpt.length > 0
+    ad: common_vendor.t($data.formData.work_position_list),
+    ae: $data.workPositionOpt.length > 0
   }, $data.workPositionOpt.length > 0 ? {
-    ad: common_vendor.o($options.confirm),
-    ae: common_vendor.p({
+    af: common_vendor.o($options.onConfirmWorkPosition),
+    ag: common_vendor.p({
       checkList: $data.formData.work_position_list,
       options: {
         label: "name",
@@ -582,8 +954,8 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
       treeNone: $data.workPositionOpt
     })
   } : {}, {
-    af: common_vendor.sr("workPosition", "7525ff05-30"),
-    ag: common_vendor.p({
+    ah: common_vendor.sr("workPosition", "7525ff05-30"),
+    ai: common_vendor.p({
       type: "bottom",
       safeArea: true,
       backgroundColor: "#fff"
